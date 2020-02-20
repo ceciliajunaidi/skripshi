@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1057609026099",
+    "firebase_url": "https://fruit-detection-63519.firebaseio.com",
+    "project_id": "fruit-detection-63519",
+    "storage_bucket": "fruit-detection-63519.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057609026099:android:3f8218110fc08e48b2b146",
+        "android_client_info": {
+          "package_name": "org.tensorflow.lite.examples.detection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057609026099-5uhkoinlbk5i8a1c9561i2np1d0me63e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.tensorflow.lite.examples.detection",
+            "certificate_hash": "6387b09ce48164e98f03648f739c90764caf6a8b"
+          }
+        },
+        {
+          "client_id": "1057609026099-ecvnu6nj8jhpclvgj7lvdd2lbqkr1u07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkGHITsPiRsZN_KgZgq0EmS_j0IGEOioI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057609026099-ecvnu6nj8jhpclvgj7lvdd2lbqkr1u07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
