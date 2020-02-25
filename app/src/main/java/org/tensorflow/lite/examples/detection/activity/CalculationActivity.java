@@ -1,6 +1,5 @@
 package org.tensorflow.lite.examples.detection.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,20 +8,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 
 import org.tensorflow.lite.examples.detection.R;
+import org.tensorflow.lite.examples.detection.room.FruitDatabase;
 import org.tensorflow.lite.examples.detection.room.FruitEntity;
 import org.tensorflow.lite.examples.detection.room.FruitRepository;
 
@@ -41,7 +36,7 @@ public class CalculationActivity extends AppCompatActivity {
     Button btnHitung, btnIncrease, btnDecrease;
 
     FruitEntity fruit;
-    FruitRepository fruitRepository;
+    FruitDatabase fruitDatabase;
 
     int minteger = 0;
 
@@ -59,35 +54,37 @@ public class CalculationActivity extends AppCompatActivity {
         txtResult.setText(result);
         imageResult = findViewById(R.id.imgIcon);
 
-        fruitRepository = new FruitRepository(this);
-        fruitRepository.getFruitByName(result.toLowerCase())
+        fruitDatabase = FruitRepository.getFruitDatabase(this);
+        fruitDatabase.fruitDao().getFruitByName(result.toLowerCase())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<FruitEntity>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(FruitEntity fruitEntity) {
-                fruit = fruitEntity;
+                    @Override
+                    public void onNext(FruitEntity fruitEntity) {
+                        fruit = fruitEntity;
 
-                byte[] decodedBytes = Base64.decode(fruit.fruitImage, Base64.DEFAULT);
-                Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-                Glide.with(CalculationActivity.this).load(decodedBitmap).into(imageResult);
-            }
+                        byte[] decodedBytes = Base64.decode(fruit.fruitImage, Base64.DEFAULT);
+                        Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                        Glide.with(CalculationActivity.this).load(decodedBitmap).into(imageResult);
 
-            @Override
-            public void onError(Throwable e) {
+                        fruitDatabase.close();
+                        Log.d("Database", "Database di close");
+                    }
 
-            }
+                    @Override
+                    public void onError(Throwable e) {
 
-            @Override
-            public void onComplete() {
+                    }
 
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                    }
+                });
 
         btnHitung = findViewById(R.id.btnHitung);
         btnHitung.setEnabled(false);
@@ -149,10 +146,4 @@ public class CalculationActivity extends AppCompatActivity {
         displayInteger.setText(String.valueOf(number));
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-
-        return true;
-    }
 }

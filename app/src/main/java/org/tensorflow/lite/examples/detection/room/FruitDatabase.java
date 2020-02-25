@@ -6,5 +6,5 @@ import androidx.room.RoomDatabase;
 @Database(entities = {FruitEntity.class}, version = 1, exportSchema = false)
 public abstract class FruitDatabase extends RoomDatabase {
 
-    abstract FruitDao fruitDao();
+    public abstract FruitDao fruitDao();
 }
